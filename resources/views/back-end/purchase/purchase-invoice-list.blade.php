@@ -49,7 +49,7 @@
 				            	</a>
 
 				            	<a href="{{ route('purchase_edit',['invoice_no'=>$show->invoice_no]) }}" title="update">
-				            		<i class="fa fa-pen"></i>
+				            		<i class="fa fa-edit"></i>
 				            	</a>
 
 				            	<a href="{{ route('purchase_invoice_delete',['invoice_no'=>$show->invoice_no]) }}" onclick="return confirm('Are you sure?')" title="delete" class="bg-danger">

@@ -15,6 +15,7 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-lg-3"></div>
 	    <div class="col-lg-6">
             @if(Session::has('message'))
                 <p class="text-success text-center font-weight-bold">{{ Session::get('message') }}</p>
@@ -62,7 +63,7 @@
 
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Update</button>
+                  <button type="submit" class="btn btn-success btn-center">Update</button>
                 </div>
               </form>
             </div>
@@ -70,6 +71,7 @@
 			</div>
 
 	     </div>
+        <div class="col-lg-3"></div>
     </div>
 </div>
 

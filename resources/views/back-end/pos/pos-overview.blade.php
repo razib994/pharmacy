@@ -14,14 +14,20 @@
 
 <div class="container">
   <div class="row">
+      <div class="col-lg-3">
+          <a href="{{ route('invoice_print',['invoice_no'=>$sale_invoice->invoice_no]) }}" class="btn btn-success" target="_blank" style="margin-left:50px;">print invoice</a>
+      </div>
+      <div class="col-lg-6 text-center">
+
+          <img src="{{ asset('back-end/dist/img/logo.png') }}" width="170px" height="45px" alt=""/>
+          <h2 class="text-center">
+              Invoice
+
+          </h2>
+      </div>
+      <div class="col-lg-3"></div>
     <div class="col-lg-10 offset-lg-1" style="background:#fff;padding:50px 0px 40px 0px;margin-bottom:50px;">
         <div class="col-lg-12 table-area">
-            <a href="{{ route('invoice_print',['invoice_no'=>$sale_invoice->invoice_no]) }}" class="btn btn-primary" target="_blank" style="margin-left:50px;">print invoice</a>
-           <h2 class="text-center">
-            Invoice
-
-           </h2>
-
 
             <div class="top_area">
                <div class="row">

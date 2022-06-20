@@ -32,11 +32,12 @@
    }
  </style>
 <body>
-  
-  
+
+
   <div class="invoice_area">
     <div class="invoice_heading">
-     <h1>Invoice</h1>
+
+     <h1>Pharma Zone <br> <small> Invoice </small></h1>
   </div>
 
       <div class="invoice_left">
@@ -44,7 +45,7 @@
          <span id="address">Address:</span>{{ $sale_invoice->customer->address }}<br/>
          <span id="phone_no">Phone No:</span>{{ $sale_invoice->customer->phone_no }}<br/>
       </div>
-      
+
       <div class="invoice_right">
          <span id="invoice_no">Invoice No:</span>{{ $sale_invoice->invoice_no }}<br/>
          <span id="date_invoice">Date:</span>{{ date('d-m-Y', strtotime($sale_invoice->sale_date)) }}<br/>
@@ -71,7 +72,7 @@
                    <td style="width:100px;">{{ $show->total_price }}</td>
                  </tr>
                  @endforeach
-              
+
               </tbody>
               <tfoot>
                   <tr>
@@ -113,7 +114,7 @@
                    <tr>
                     <td colspan="4"></td>
                     <td>
-                      
+
                     </td>
                   </tr>
                   </tfoot>

@@ -50,7 +50,7 @@
 
 
 				            	<a href="{{ route('pos_edit',['invoice_no'=>$show->invoice_no]) }}" title="Update">
-				            		<i class="fa fa-pen"></i>
+				            		<i class="fa fa-edit"></i>
 				            	</a>
 
                                 @if(\Illuminate\Support\Facades\Auth::user()->is_admin == 1)

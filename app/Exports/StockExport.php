@@ -20,7 +20,9 @@ class StockExport implements FromCollection, WithHeadings, ShouldAutoSize
             'category Name',
             'medicine_name',
             'in_quantity',
-            'box_quantity'
+            'box_quantity',
+            'Out Quantity',
+            'Available Quantity',
         ];
     }
 

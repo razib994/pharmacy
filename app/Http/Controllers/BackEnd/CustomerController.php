@@ -4,11 +4,13 @@ namespace App\Http\Controllers\BackEnd;
 use App\Exports\CustomerExport;
 use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\PosInvoice;
 use App\Models\SaleInvoice;
 use App\Models\CreditPaymentHistory;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Session;
 use DB;
@@ -26,21 +28,45 @@ class CustomerController extends Controller
 
     public function store(Request $request){
 
-          $validated = $request->validate([
-			  'name'=>'required|string',
-			  'phone_no'=>'required|string|min:11|unique:customers',
-			  'address'=>'required|string',
-			]);
-          if($validated->fails()) {
+        $validator = Validator::make($request->all(), [
+            'name'=>        'required',
+            'phone_no'=>    'required|min:11',
+            'address'=>     'required',
+        ]);
+        if($validator->fails()) {
+                $return['status'] = 400;
+                $return['errors'] = $validator->errors();
+                return json_encode($return);
+        } else {
+            $info = new Customer();
+            $info->name = $request->name;
+            $info->phone_no = $request->phone_no;
+            $info->address = $request->address;
+            $info->save();
+            $return['status']   = 200;
+            $return['success'] = 'Customer is successfully added';
+            return json_encode($return);
 
-          }
+        }
 
-        $info = new Customer();
-        $info->name = $request->name;
-        $info->phone_no = $request->phone_no;
-        $info->address = $request->address;
-        $info->save();
-        dd("now");
+        // Session::flash('message','Insert Successful');
+        //return redirect()->back()->with('message','Customer Added Succefully ');
+    }
+
+    public function customerStore(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'name'=>        'required',
+            'phone_no'=>    'required|min:11',
+            'address'=>     'required',
+        ]);
+
+            $info = new Customer();
+            $info->name = $request->name;
+            $info->phone_no = $request->phone_no;
+            $info->address = $request->address;
+            $info->save();
+
         // Session::flash('message','Insert Successful');
         return redirect()->back()->with('message','Customer Added Succefully ');
     }

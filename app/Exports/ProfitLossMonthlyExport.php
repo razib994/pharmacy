@@ -16,10 +16,8 @@ class ProfitLossMonthlyExport implements FromCollection, WithHeadings, ShouldAut
     public function headings(): array
     {
         return [
-            'invoice_no',
-            'Customer Name',
-            'Sale Date',
-            'Total Amount',
+            'Month',
+            'Amount',
         ];
     }
 

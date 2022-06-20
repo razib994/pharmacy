@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="{{ asset('back-end/dist/img/logo.png') }}">
   <title>Pharma Zone | Login</title>
 
   <!-- Google Font: Source Sans Pro -->
@@ -15,6 +16,11 @@
   <link rel="stylesheet" href="{{ asset('/') }}back-end/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition login-page" style="background-image: url('front-end/Pharma Front.jpg'); background-size: cover;">
+<style>
+    .card-primary.card-outline {
+        border-top: 3px solid green !important;
+    }
+</style>
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
@@ -54,7 +60,7 @@
         </div>
         <div class="row">
           <div class="col-8">
-            <div class="icheck-primary">
+            <div class="icheck-success">
               <input type="checkbox" id="remember">
               <label for="remember">
                 Remember Me
@@ -63,7 +69,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <button type="submit" class="btn btn-success btn-block">Sign In</button>
           </div>
           <!-- /.col -->
         </div>

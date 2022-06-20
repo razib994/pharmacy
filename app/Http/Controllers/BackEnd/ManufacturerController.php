@@ -50,12 +50,12 @@ class ManufacturerController extends Controller
        return view('back-end.manufacturer.edit-manufacturer',$data);
     }
 
-   
+
      public function update(Request $request){
 
           $request->validate([
 			  'name'=>'required|string',
-			  'phone_no'=>'required|string|min:11|unique:manufacturers',
+			  'phone_no'=>'required|string|min:11',
 			  'email'=>'required|string|',
 			  'address'=>'required|string',
 			]);
@@ -71,12 +71,12 @@ class ManufacturerController extends Controller
     }
 
      public function payable_manufacturer(){
-        $data['invoice'] = Invoice::where('due_amount','>','0')->get(); 
+        $data['invoice'] = Invoice::where('due_amount','>','0')->get();
         return view('back-end.manufacturer.payable_manufacturer',$data);
     }
-    
+
      public function payable_manufacturer_edit($id){
-        $data['info'] = Invoice::find($id); 
+        $data['info'] = Invoice::find($id);
         return view('back-end.manufacturer.edit-payable-manufacturer',$data);
     }
 
@@ -104,12 +104,12 @@ class ManufacturerController extends Controller
     }
 
      public function manufacturer_payments_history(){
-        $data['payments'] = PaymentHistory::all(); 
+        $data['payments'] = PaymentHistory::all();
         return view('back-end.manufacturer.manufacturer-payment-history',$data);
     }
      public function manufacturer_payments_delete($id){
-        $payments_delete = PaymentHistory::find($id); 
-        $payments_delete->delete(); 
+        $payments_delete = PaymentHistory::find($id);
+        $payments_delete->delete();
         return view('back-end.manufacturer.manufacturer-payment-history');
     }
 

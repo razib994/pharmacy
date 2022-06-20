@@ -15,6 +15,7 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-lg-3"></div>
 	    <div class="col-lg-6">
 			<div class="card" style="padding:30px;">
 
@@ -24,8 +25,8 @@
                 </div>
              @endif
 
-				<div class="card card-primary">
-              <div class="card-header">
+				<div class="card " >
+              <div class="card-header" style="background: #1ac742; color: #fff;">
                 <h3 class="p-0 m-0">User Info</h3>
               </div>
               <!-- /.card-header -->
@@ -71,7 +72,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Submit</button>
+                  <button type="submit" class="btn btn-success btn-center">Submit</button>
                 </div>
               </form>
             </div>
@@ -79,6 +80,7 @@
 			</div>
 
 	     </div>
+        <div class="col-lg-3"></div>
     </div>
 </div>
 

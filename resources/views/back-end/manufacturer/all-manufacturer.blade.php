@@ -26,7 +26,7 @@
                 @endif
 
                   @if(Session::has('update'))
-                   <div class="alert alert-primary" role="alert">
+                   <div class="alert alert-success" role="alert">
 				      <p class="text-center font-weight-bold p-0 m-0">{{ Session::get('update') }}</p>
 				   </div>
                 @endif
@@ -56,7 +56,7 @@
 				            <td>
 
 				            	<a href="{{ route('manufacturer_edit',['id'=>$show->id]) }}" title="update">
-				            		<i class="fa fa-pen"></i>
+				            		<i class="fa fa-edit"></i>
 				            	</a>
 
 				            	<a href="{{ route('manufacturer_delete',['id'=>$show->id]) }}" onclick="return confirm('Are you sure?')" title="delete" class="bg-danger">

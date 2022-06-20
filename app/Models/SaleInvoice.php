@@ -41,17 +41,47 @@ class SaleInvoice extends Model
     }
 
     public static function getProfitLossMonthly() {
-        $records = DB::table('sale_invoices')->select('invoice_no','sale_date','total_amount')->whereYear('sale_date',Carbon::now()->year-1)->orderBy('id', 'asc')->get()->toArray();
-        return $records;
+        $total_purchase_price = SaleRevenue::whereMonth('sale_date',date('m'))->sum('total_purchase_price');
+        $total_sale_price = SaleRevenue::whereMonth('sale_date',date('m'))->sum('total_sale_price');
+        $revenue = $total_sale_price - $total_purchase_price;
+        $current_month_expense = Expense::whereMonth('date',date('m'))->sum('amount');
+        $profit_loss = $revenue-$current_month_expense;
+        $t = $profit_loss;
+        $records =  [
+            'month_name'    => date('F'),
+            'amount'        => $t,
+            ];
+        $data = array((object)$records);
+        return $data;
     }
 
     public static function getProfitLossYearly() {
-        $records = DB::table('sale_invoices')->select('invoice_no','sale_date','total_amount')->whereYear('sale_date',Carbon::now()->year-1)->orderBy('id', 'asc')->get()->toArray();
-        return $records;
+        $total_purchase_price = SaleRevenue::whereYear('sale_date',Carbon::now()->year)->sum('total_purchase_price');
+        $total_sale_price = SaleRevenue::whereYear('sale_date',Carbon::now()->year)->sum('total_sale_price');
+        $revenue = $total_sale_price - $total_purchase_price;
+        $current_year_expense = Expense::whereYear('date',Carbon::now()->year)->sum('amount');
+        $profit_loss = $revenue-$current_year_expense;
+        $t = $profit_loss;
+        $records =  [
+            'year_name'    => Carbon::now()->year,
+            'amount'        => $t,
+        ];
+        $data = array((object)$records);
+        return $data;
     }
 
     public static function getProfitLossPrevious() {
-        $records = DB::table('sale_invoices')->select('invoice_no','sale_date','total_amount')->whereYear('sale_date',Carbon::now()->year-1)->orderBy('id', 'asc')->get()->toArray();
-        return $records;
+        $total_purchase_price = SaleRevenue::whereYear('sale_date',Carbon::now()->year-1)->sum('total_purchase_price');
+        $total_sale_price = SaleRevenue::whereYear('sale_date',Carbon::now()->year-1)->sum('total_sale_price');
+        $revenue = $total_sale_price - $total_purchase_price;
+        $current_year_expense = Expense::whereYear('date',Carbon::now()->year-1)->sum('amount');
+        $profit_loss = $revenue-$current_year_expense;
+        $t = $profit_loss;
+        $records =  [
+            'previous_month_name'    => Carbon::now()->year-1,
+            'amount'                 => $t,
+        ];
+        $data = array((object)$records);
+        return $data;
     }
 }

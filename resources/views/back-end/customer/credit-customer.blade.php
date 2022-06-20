@@ -46,7 +46,7 @@
 				            <td>{{ $show->paid_amount }}</td>
 				            <td>{{ $show->due_amount }}</td>
 				            <td>
-				            	<a href="{{ route('edit_credit_customer',['invoice_no'=>$show->invoice_no]) }}" title="update"><i class="fa fa-pen"></i></a>
+				            	<a href="{{ route('edit_credit_customer',['invoice_no'=>$show->invoice_no]) }}" title="update"><i class="fa fa-edit"></i></a>
 				            </td>
 				        </tr>
 				        @endforeach

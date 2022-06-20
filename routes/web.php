@@ -9,7 +9,7 @@ use App\Http\Controllers;
 
 
 /*backend page setup*/
-Route::get('/final',[
+Route::get('/chunnu',[
     "uses" =>"App\Http\Controllers\Backend\BackendController@login",
     "as" =>"login"
 ]);
@@ -135,6 +135,10 @@ Route::group(['prefix'=>'customer','namespace'=>'App\Http\Controllers\BackEnd'],
 	"uses" =>"CustomerController@store",
 	"as" =>"customer_store"
    ]);
+    Route::post('/store-customer',[
+        "uses" =>"CustomerController@customerStore",
+        "as" =>"customer_store_data"
+    ]);
 
    Route::get('/delete/{id}',[
 	"uses" =>"CustomerController@delete",
@@ -501,7 +505,7 @@ Route::group(['prefix'=>'pos','namespace'=>'App\Http\Controllers\BackEnd'],funct
    ]);
 
    Route::get('/avaiable/quantity1',[
-      "uses" =>"App\Http\Controllers\PosController@get_available_quantity",
+      "uses" =>"PosController@get_available_quantity",
       "as" =>"get_available_quantity1"
    ]);
     Route::get('/avaiable/quantity2',[
@@ -973,6 +977,11 @@ Route::group(['prefix'=>'expense','namespace'=>'App\Http\Controllers\BackEnd'],f
 Route::get('/sales/return/delete/{id}',[
     "uses" =>"App\Http\Controllers\BackEnd\ReturnController@salesreutrndelete",
     "as" =>"sales_reutrn_delete"
+]);
+
+Route::get('/purchase/return/delete/{id}',[
+    "uses" =>"App\Http\Controllers\BackEnd\ReturnController@purchesReturndelete",
+    "as" =>"purchase_reutrn_delete"
 ]);
 // return working
 Route::group(['prefix'=>'return','namespace'=>'App\Http\Controllers\BackEnd'],function(){

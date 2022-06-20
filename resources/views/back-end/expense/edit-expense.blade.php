@@ -15,6 +15,7 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-lg-3"></div>
 	    <div class="col-lg-6">
 			<div class="card" style="padding:30px;">
 
@@ -54,7 +55,7 @@
                     <label>Date</label>
                     <input type="date" name="date" class="form-control" value="{{ $info->date }}">
                   </div>
-                   
+
                   <div class="form-group">
                     <label>Remarks</label>
                     <input type="text" name="remarks" class="form-control" value="{{ $info->remarks }}">
@@ -64,7 +65,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Update</button>
+                  <button type="submit" class="btn btn-success btn-center">Update</button>
                 </div>
               </form>
             </div>
@@ -72,6 +73,7 @@
 			</div>
 
 	     </div>
+        <div class="col-lg-3"></div>
     </div>
 </div>
 

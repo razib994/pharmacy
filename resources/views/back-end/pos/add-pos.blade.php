@@ -17,7 +17,6 @@
     <div class="row">
       <div class="col-lg-12">
       <div class="card" style="padding:30px;">
-
              <a href="{{ route('all_stock') }}" class="stock-btn">Stock Info</a>
 
              @if(Session::has('message'))
@@ -30,15 +29,6 @@
               <div class="card-header">
                 <h3 class="p-0 m-0 pos_info">POS Info</h3>
               </div>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
               <!-- /.card-header -->
               <!-- form start -->
               <form action="{{ route('pos_store') }}" method="POST">
@@ -54,7 +44,7 @@
                               <span id="plus" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-plus"></i></span>
                            </label>
                           <select class="form-control select2" id="customer_id" name="customer_id" style="width: 100%;">
-                              <option selected="selected">Select here</option>
+                              <option selected="selected" value="">Select here</option>
                                @foreach( $customers as $show)
                               <option value="{{ $show->id }}">{{ $show->name }}</option>
                               @endforeach
@@ -210,7 +200,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Submit</button>
+                  <button type="submit" class="btn btn-success btn-center">Submit</button>
                 </div>
               </form>
             </div>
@@ -230,13 +220,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
       </div>
       <div class="modal-body">
-
-        <form action="{{ route('customer_store') }}" method="POST">
-          @csrf
-
+          <ul id="save_msgList"></ul>
+        <form action="" method="POST" id="form">
+            @csrf
           <div class="form-group">
               <label>Name</label>
-              <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Customer Name" value="{{ old('name') }}">
+              <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Customer Name" value="{{ old('name') }}">
               @error('name')
               <span class="text-danger">{{ $message }}</span>
              @enderror
@@ -244,7 +233,7 @@
 
           <div class="form-group">
               <label>Phone Number</label>
-              <input type="text" name="phone_no" class="form-control @error('phone_no') is-invalid @enderror" placeholder="Phone Number" value="{{ old('phone_no') }}">
+              <input type="text" name="phone_no" id="phone" class="form-control @error('phone_no') is-invalid @enderror" placeholder="Phone Number" value="{{ old('phone_no') }}">
                @error('phone_no')
                 <span class="text-danger">{{ $message }}</span>
                @enderror
@@ -252,18 +241,16 @@
 
           <div class="form-group">
               <label>Address</label>
-              <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" placeholder="Customer Address" value="{{ old('address') }}">
+              <input type="text" name="address" id="addres" class="form-control @error('address') is-invalid @enderror" placeholder="Customer Address" value="{{ old('address') }}">
                @error('address')
                 <span class="text-danger">{{ $message }}</span>
                @enderror
           </div>
 
-
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" id="ajaxSubmit" class="btn btn-success">Submit</button>
       </div>
       </form>
     </div>
@@ -272,7 +259,42 @@
 @endsection
 
 @push('scripts')
+
 <script>
+
+    $(document).ready(function(){
+        $('#ajaxSubmit').click(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "{{ route('customer_store') }}",
+                method: 'post',
+                data: {
+                    name: $('#name').val(),
+                    phone_no: $('#phone').val(),
+                    address: $('#addres').val(),
+                    _token: '{{ csrf_token() }}'
+
+                },
+                success: function(result){
+                    var response = JSON.parse(result);
+                    if (response.status == 400) {
+                        $('#save_msgList').html("");
+                        $('#save_msgList').addClass('alert alert-danger');
+                        $.each(response.errors, function (key, err_value) {
+                            $('#save_msgList').append('<li>' + err_value + '</li>');
+                        });
+                    }else {
+                        $('#save_msgList').html("");
+                        $('#success_message').addClass('alert alert-success');
+                        $('#success_message').text(response.success);
+                        $('#exampleModal').find('input').val('');
+                        $('#exampleModal').modal('hide');
+                    }
+
+
+                }});
+        });
+    });
 
     var d = new Date();
            var currDay = d.getDate();
@@ -309,25 +331,26 @@
 
              '<td class="col-lg-2"><input type="text" class="form-control total_pos_price'+i+'" name="total_price[]" placeholder="0.00" readonly=""></td>'+
 
-             '<td class="col-lg-1"><a class="btn btn-xs btn-danger" id="remove" style="background: red;"><i class="fa fa-minus"></i></a></td>'
+             '<td class="col-lg-1"><a class="btn btn-xs btn-danger" id="remove_pos" style="background: red;"><i class="fa fa-minus"></i></a></td>'
 
             '</tr>';
             $('tbody').append(tr);
             $('.select2').select2();
     }
 
-    $(document).on('click','#remove_pos',function(){
-      var last = $('tbody tr').length;
-        if(last==1){
-          alert('Field no deleted!');
-        }else{
-           $(this).closest('tr').remove();
-        }
 
-  });
 
 
   $(function(){
+      $(document).on('click','#remove_pos',function(){
+          var last = $('tbody tr').length;
+          if(last==1){
+              alert('Field no deleted!');
+          }else{
+              $(this).closest('tr').remove();
+          }
+          SubtotalAmountSale();
+      });
 
       //total price
      $(document).on('keyup', '.quantity',function(){
@@ -1337,7 +1360,7 @@
            dataType: "json",
            data:{category_id:category_id,medicine_name:medicine_name},
            success:function(data){
-            console.log(data.available);
+
             $('.available_stock1').val(data.available);
            }
         });
@@ -1354,7 +1377,7 @@
            dataType: "json",
            data:{category_id:category_id,medicine_name:medicine_name},
            success:function(data){
-            console.log(data.available);
+
             $('.available_stock2').val(data.available);
            }
         });

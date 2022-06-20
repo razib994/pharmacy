@@ -15,7 +15,7 @@ Profit/Loss for the Year of
 <div class="container">
     <div class="row">
 	    <div class="col-lg-12">
-            <a href="{{ route('download_excel') }}" class="excel_btn">
+            <a href="{{ url('get_profit_loss_yearly') }}" class="excel_btn">
                 <i class="fa fa-file-excel"></i>Download Excel
             </a>
 			<div class="card" style="padding:30px;">

@@ -28,10 +28,17 @@ class PurchaseController extends Controller
     	$data['manufacturer'] = Manufacturer::all();
         $data['category'] = Category::all();
         $data['medicine'] = Medicine::all();
+        $data['type'] = Type::all();
     	return view('back-end.purchase.add-purchase',$data);
     }
 
     public function store(Request $request){
+
+        $validated = $request->validate([
+            'manufacturer_id'   => 'required',
+            'purchase_date'     => 'required',
+            'invoice_no'        => 'required',
+        ]);
 
         $count_medicine = count($request->medicine_name);
         for($i=0; $i<$count_medicine; $i++){
@@ -42,7 +49,6 @@ class PurchaseController extends Controller
             $info->purchase_date = date('Y-m-d',strtotime($request->purchase_date));
             $info->invoice_no = $request->invoice_no;
             $info->medicine_name = $request->medicine_name[$i];
-            $info->expire_date = date('Y-m-d',strtotime($request->expire_date[$i]));
             $info->quantity = $request->quantity[$i];
             $info->total_quantity = $request->total_quantity[$i];
             $info->total_purchase_price = $request->total_purchase_price[$i];
@@ -80,6 +86,8 @@ class PurchaseController extends Controller
        $data['purchases_data'] = Purchase::where('invoice_no',$invoice_no)->get();
        $data['invoices_data'] = Invoice::where('invoice_no',$invoice_no)->first();
        $data['type'] = Type::all();
+       $data['medicine'] = Medicine::all();
+       $data['category'] = Category::all();
        return view('back-end.purchase.edit-purchase',$data);
     }
 
@@ -105,9 +113,7 @@ class PurchaseController extends Controller
     public function purchase_invoice_update(Request $request){
        Purchase::where('invoice_no',$request->invoice_no)->delete();
        Stock::where('invoice_id',$request->invoice_no)->delete();
-
         foreach($request['medicine_name'] as $key=>$value){
-
             Purchase::create(
                 [
                   "manufacturer_id"=>$request->manufacturer_id,
@@ -116,7 +122,6 @@ class PurchaseController extends Controller
                   "type_id"=>$request['type_id'][$key],
                   "purchase_date"=>date('Y-m-d',strtotime($request->purchase_date)),
                   "invoice_no"=>$request->invoice_no,
-                  "expire_date"=> date('Y-m-d',strtotime($request->expire_date[$key])),
                   "quantity"=>$request['quantity'][$key],
                   "total_quantity"=>$request['total_quantity'][$key],
                   "total_purchase_price"=>$request['total_purchase_price'][$key],
@@ -135,8 +140,6 @@ class PurchaseController extends Controller
             ]);
 
         }
-
-
         $res = DB::table('invoices')
                     ->where('invoice_no',$request->invoice_no)
                     ->update(

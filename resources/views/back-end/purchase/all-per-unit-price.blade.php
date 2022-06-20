@@ -14,7 +14,7 @@
 
 
 <div class="container">
-    <div class="row"> 
+    <div class="row">
 	    <div class="col-lg-12">
 
 			<div class="card" style="padding:30px;">
@@ -57,7 +57,7 @@
 				            <td>
 
 				            	<a href="{{ route('per_unit_price_edit',['id'=>$show->id]) }}" title="update">
-				            		<i class="fa fa-pen"></i>
+				            		<i class="fa fa-edit"></i>
 				            	</a>
 
 				            	<a href="{{ route('manufacturer_delete',['id'=>$show->id]) }}" onclick="return confirm('Are you sure?')" title="delete" class="bg-danger">
@@ -71,7 +71,7 @@
 			    </table>
 
 			    <h5 class="text-center text-primary font-weight-bold">
-			       
+
 			    </h5>
 
 			</div>

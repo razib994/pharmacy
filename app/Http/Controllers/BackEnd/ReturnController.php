@@ -30,33 +30,44 @@ class ReturnController extends Controller
    }
 
    public function store_purchase_return(Request $request){
+       $validated = $request->validate([
+           'medicine_name.*' => ['required'],
+           'category_id.*' => ['required'],
+
+       ]);
    	   foreach($request['medicine_name'] as $key=>$value){
+
    	   	 ReturnPurchase::create(
    	   	 	[
-   	   	 		'medicine_name'=>$value,
-   	   	 		'category_id' =>$request['category_id'][$key],
-   	   	 		'return_date' =>$request['purchase_return_date'][$key],
-   	   	 		'amount' =>$request['amount'][$key],
-   	   	 		'quantity' =>$request['quantity'][$key],
-   	   	 		'total_amount' =>$request['total_amount'][$key],
+   	   	 		'medicine_name' => $value,
+   	   	 		'category_id'   => $request['category_id'][$key],
+   	   	 		'return_date'   => $request['purchase_return_date'][$key],
+   	   	 		'amount'        => $request['amount'][$key],
+   	   	 		'quantity'      => $request['quantity'][$key],
+   	   	 		'total_amount'  => $request['total_amount'][$key],
    	   	    ]
    	   	);
-
    	   	$info = Stock::where(['category_id'=>$request['category_id'][$key]])
                     ->where(['medicine_name'=>$request['medicine_name'][$key]])
                     ->value('in_quantity');
-
    	    $res = DB::table('stocks')
                     ->where(['category_id'=>$request['category_id'][$key]])
                     ->where(['medicine_name'=>$request['medicine_name'][$key]])
                     ->update(['in_quantity'=>$info-$request['quantity'][$key]]);
    	   }
-
-
-
    	   return redirect('return/purchase/list');
    }
 
+    public function purchesReturndelete($id){
+
+        $info = ReturnPurchase::find($id);
+        $stock = Stock::where('medicine_name',$info->medicine_name)->where('category_id',$info->category_id)->first();
+        $stock->in_quantity = $stock->in_quantity + $info->quantity;
+        $stock->update();
+
+        $info->delete();
+        return redirect('return/purchase/list')->with('message','Delete Successfully');
+    }
 
    public function sales_return_list(){
    	  $data['sales_return'] = SalesReturn::all();
@@ -79,6 +90,12 @@ class ReturnController extends Controller
 
    public function store_sales_return(Request $request){
 
+       $validated = $request->validate([
+           'medicine_name.*' => ['required'],
+           'category_id.*' => ['required'],
+
+       ]);
+
      foreach($request['medicine_name'] as $key=>$value){
    	   	 SalesReturn::create(
    	   	 	[
@@ -90,21 +107,17 @@ class ReturnController extends Controller
    	   	 		'total_amount' =>$request['total_amount'][$key],
    	   	    ]
    	   	);
-
    	   	$info = Stock::where(['category_id'=>$request['category_id'][$key]])
                     ->where(['medicine_name'=>$request['medicine_name'][$key]])
                     ->value('in_quantity');
-
    	    $res = DB::table('stocks')
                     ->where(['category_id'=>$request['category_id'][$key]])
                     ->where(['medicine_name'=>$request['medicine_name'][$key]])
                     ->update(['in_quantity'=>$info+$request['quantity'][$key]]);
-
    	   }
-
         SaleReturnSubtotal::create([
-           "return_date" =>$request->return_date,
-           "subtotal" =>$request->subtotal
+           "return_date"    => $request->return_date,
+           "subtotal"       => $request->subtotal
         ]);
 
    	   return redirect('return/sales/list');
@@ -114,6 +127,9 @@ class ReturnController extends Controller
 
     public function salesreutrndelete($id){
         $info = SalesReturn::find($id);
+        $stock = Stock::where('medicine_name',$info->medicine_name)->where('category_id',$info->category_id)->first();
+        $stock->in_quantity = $stock->in_quantity - $info->quantity;
+        $stock->update();
         $info->delete();
         return redirect('return/sales/list')->with('message','Delete Successfully');
     }

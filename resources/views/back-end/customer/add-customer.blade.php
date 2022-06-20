@@ -15,6 +15,7 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-lg-3"></div>
 	    <div class="col-lg-6">
 			<div class="card" style="padding:30px;">
 
@@ -30,7 +31,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="{{ route('customer_store') }}" method="POST">
+              <form action="{{ route('customer_store_data') }}" method="POST">
               	@csrf
                 <div class="card-body">
 
@@ -62,7 +63,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Submit</button>
+                  <button type="submit" class="btn btn-success btn-center">Submit</button>
                 </div>
               </form>
             </div>
@@ -70,6 +71,7 @@
 			</div>
 
 	     </div>
+        <div class="col-lg-3"></div>
     </div>
 </div>
 

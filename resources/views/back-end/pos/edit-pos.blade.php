@@ -72,6 +72,7 @@
                          <tr>
                            <th>Medicine Name</th>
                            <th>Category</th>
+                           <th>Available Stock </th>
                            <th>Quantity</th>
                            <th>Purchase Unit Price</th>
                            <th>Sale Unit Price</th>
@@ -86,6 +87,7 @@
 
                        <td class="col-lg-3">
                            @php $i =  $loop->iteration @endphp
+                           @php $edit_count = $pos_invoices_count @endphp
                          <input type="text" name="medicine_name[]" value="{{ $info->medicine_name }}" class="form-control medicine_name{{$i}}">
                        </td>
 
@@ -94,20 +96,24 @@
                         <input type="hidden" name="category_id[]" value="{{ $info->category_id }}" class="form-control category_id{{$i}}">
                        </td>
 
+                         <td class="col-lg-1">
+                             <input type="text" class="form-control available_stock{{$i}}" name="available_stock[]" value="{{ $info->available_stock }}" readonly="">
+                         </td>
+
                         <td class="col-lg-1">
-                         <input type="text" class="form-control quantity{{$i}}" name="quantity[]" value="{{ $info->quantity }}" id="quantity">
+                         <input type="text" class="form-control quantity{{$i}}" name="quantity[]" value="{{ $info->quantity }}" id="quantity" >
                        </td>
 
                        <td class="col-lg-1">
-                         <input type="text" class="form-control purchase_unit_price{{$i}}" name="purchase_unit_price[]" value="{{ $info->purchase_unit_price }}">
+                         <input type="text" class="form-control purchase_unit_price{{$i}}" name="purchase_unit_price[]" value="{{ $info->purchase_unit_price }}" readonly>
                        </td>
 
                        <td class="col-lg-2">
-                         <input type="text" class="form-control sale_unit_price{{$i}}" name="sale_unit_price[]" value="{{ $info->sale_unit_price }}">
+                         <input type="text" class="form-control sale_unit_price{{$i}}" name="sale_unit_price[]" value="{{ $info->sale_unit_price }}" readonly>
                        </td>
 
                        <td class="col-lg-2">
-                         <input type="text" class="form-control total_price{{$i}}" name="total_price[]" value="{{ $info->total_price }}">
+                         <input type="text" class="form-control total_price{{$i}}" name="total_price[]" value="{{ $info->total_price }}" readonly>
                        </td>
 
                         <td class="col-lg-1">
@@ -129,7 +135,7 @@
 
                         <tfoot>
                           <tr>
-                            <td colspan="4"></td>
+                            <td colspan="5"></td>
                             <td>Sub Total:</td>
                             <td>
                               <input type="text" name="subtotal" class="form-control subtotal" value="{{ $sale_invoices->subtotal }}">
@@ -141,7 +147,7 @@
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="4"></td>
+                            <td colspan="5"></td>
                             <td>Discount:</td>
                             <td>
                               <input type="text" name="discount" class="form-control discount" value="{{ $sale_invoices->discount }}">
@@ -150,7 +156,7 @@
 
 
                           <tr>
-                            <td colspan="4"></td>
+                            <td colspan="5"></td>
                             <td>Total Amount:</td>
                             <td>
                               <input type="text" name="total_amount" class="form-control total_amount" value="{{ $sale_invoices->total_amount }}">
@@ -158,14 +164,14 @@
                           </tr>
 
                           <tr>
-                            <td colspan="4"></td>
+                            <td colspan="5"></td>
                             <td>Paid Amount:</td>
                             <td>
                               <input type="text" name="paid_amount" class="form-control paid_amount_sale" value="{{ $sale_invoices->paid_amount }}">
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="4"></td>
+                            <td colspan="5"></td>
                             <td>Due Amount:</td>
                             <td>
                               <input type="text" name="due_amount" class="form-control due_amount_sale" value="{{ $sale_invoices->due_amount }}">
@@ -181,7 +187,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Update</button>
+                  <button type="submit" class="btn btn-success btn-center">Update</button>
                 </div>
               </form>
             </div>
@@ -230,13 +236,12 @@
           </div>
 
 
-
-      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-success">Submit</button>
       </div>
       </form>
+      </div>
     </div>
   </div>
 </div>
@@ -246,9 +251,49 @@
 
 
 <script>
+    $('#add_row_pos').on('click',function(){
+        AddRowPosfunction();
+    });
+
+    var i = "<?php echo $edit_count; ?>";
+    function AddRowPosfunction(){
+        ++i;
+        var tr = '<tr>'+
+            '<td class="col-lg-3"><select class="form-control select2 medicine_name" id="medicine_name'+i+'"name="medicine_name[]" style="width: 100%;"><option selected="selected" >Select here</option>@foreach( $medicine as $show)<option value="{{ $show->medicine_name }}">{{ $show->medicine_name }}</option>@endforeach</select></td>'+
+
+            '<td class="col-lg-2"><select class="form-control select2 category_id" id="category_id'+i+'" name="category_id[]" style="width: 100%;"><option selected="selected">Select here</option>@foreach( $category as $show)<option value="{{ $show->id }}">{{ $show->name }}</option>@endforeach</select></td>'+
+
+            ' <td class="col-lg-1"><input type="text" class="form-control available_stock'+i+'" name="available_stock[]" placeholder="0" readonly=""></td>'+
+
+            ' <td class="col-lg-1"><input type="hidden" value="'+i+'" onclick="a()" id="incriment" name="incriment"/><input type="text" class="form-control quantity'+i+'" name="quantity[]" placeholder="0"></td>'+
+
+            ' <td class="col-lg-1" style="display:none;"><input type="hidden" name="total_purchase_price[]" class="total_purchase_price'+i+'"></td>'+
+
+            ' <td class="col-lg-1" style="display:none;"><input type="hidden" name="total_sale_price[]" class="sale_unit_price'+i+'"></td>'+
+
+            '<td class="col-lg-1"><input type="text" name="purchase_unit_price[]" class="form-control purchase_unit_price'+i+'" readonly="" placeholder="0.00"></td>'+
+
+            '<td class="col-lg-1"><input type="text" name="sale_unit_price[]" class="form-control sale_unit_price'+i+'" readonly="" placeholder="0.00"></td>'+
+
+            '<td class="col-lg-2"><input type="text" class="form-control total_price'+i+'" name="total_price[]" placeholder="0.00" readonly=""></td>'+
+
+            '<td class="col-lg-1"><a class="btn btn-xs btn-danger" id="remove_pos" style="background: red;"><i class="fa fa-minus"></i></a></td>'
+
+        '</tr>';
+        $('tbody').append(tr);
+        $('.select2').select2();
+    }
+
+    $(document).on('click','#remove_pos',function(){
+        var last = $('tbody tr').length;
+        if(last==1){
+            alert('Field no deleted!');
+        }else{
+            $(this).closest('tr').remove();
+        }
+        SubtotalAmountSale();
+    });
   $(document).ready(function(){
-
-
     //total price
      $(document).on('keyup', '#quantity',function(){
         var Quantity = $(this).val();
@@ -290,15 +335,7 @@
 
 
   })
-  $(document).on('click','#remove_pos',function(){
-      var last = $('tbody tr').length;
-      if(last==1){
-          alert('Field no deleted!');
-      }else{
-          $(this).closest('tr').remove();
-      }
-      SubtotalAmountSale();
-  });
+
 
   //subtotal price
   function SubtotalAmountSale(){

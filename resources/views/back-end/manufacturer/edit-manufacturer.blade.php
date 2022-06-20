@@ -15,6 +15,7 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-lg-3"> </div>
 	    <div class="col-lg-6">
 			<div class="card" style="padding:30px;">
 
@@ -65,7 +66,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Update</button>
+                  <button type="submit" class="btn btn-success btn-center">Update</button>
                 </div>
               </form>
             </div>
@@ -73,6 +74,7 @@
 			</div>
 
 	     </div>
+        <div class="col-lg-3"> </div>
     </div>
 </div>
 

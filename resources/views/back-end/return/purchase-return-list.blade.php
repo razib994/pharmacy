@@ -27,7 +27,7 @@
                 @endif
 
                   @if(Session::has('update'))
-                   <div class="alert alert-primary" role="alert">
+                   <div class="alert alert-success" role="alert">
 				      <p class="text-center font-weight-bold p-0 m-0">{{ Session::get('update') }}</p>
 				   </div>
                 @endif
@@ -68,7 +68,7 @@
 				            		<i class="fa fa-pen"></i>
 				            	</a> -->
 
-				            	<a href="{{ route('item_wise_purchase_list_delete',['id'=>$show->id]) }}" onclick="return confirm('Are you sure?')" title="delete" class="bg-danger">
+				            	<a href="{{ route('purchase_reutrn_delete',['id'=>$show->id]) }}" onclick="return confirm('Are you sure?')" title="delete" class="bg-danger">
 				            		<i class="fa fa-trash"></i>
 				            	</a>
 				            </td>

@@ -58,7 +58,7 @@
 				            <td>{{ $show->due_amount }}</td>
 				            <td>
 				            	<a href="{{ route('payable_manufacturer_edit',['id'=>$show->id]) }}" title="update">
-				            		<i class="fa fa-pen"></i>
+				            		<i class="fa fa-edit"></i>
 				            	</a>
 
 				            </td>

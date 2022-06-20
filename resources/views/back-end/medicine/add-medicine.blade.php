@@ -36,7 +36,7 @@
                 <div class="card-body">
 
                   <div class="row">
-                      
+
                        <div class="form-group col-lg-3">
                           <label> Manufacturer</label>
                           <select class="form-control select2bs4" name="manufacturer_id" style="width: 100%;" id="manufacturer_id">
@@ -73,7 +73,7 @@
                                @foreach( $category as $show)
                               <option value="{{ $show->id }}">{{ $show->name }}</option>
                               @endforeach
-                              
+
                           </select>
                              @error('unit_id')
                               <span class="text-danger">{{ $message }}</span>
@@ -91,7 +91,7 @@
                                @foreach( $unit as $show)
                               <option value="{{ $show->id }}">{{ $show->name }}</option>
                               @endforeach
-                              
+
                           </select>
                              @error('unit_id')
                               <span class="text-danger">{{ $message }}</span>
@@ -114,7 +114,7 @@
                         @enderror
                       </div>
 
-                    
+
 
                       <div class="form-group col-lg-3">
                         <label>Select Status</label><br/>
@@ -132,10 +132,10 @@
 
 
                 </div>
-               
+
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Submit</button>
+                  <button type="submit" class="btn btn-success btn-center">Submit</button>
                 </div>
               </form>
             </div>

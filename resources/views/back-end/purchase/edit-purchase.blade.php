@@ -36,7 +36,7 @@
 
                     <div class="add_item">
                     <div class="row">
-                      
+
                        <div class="form-group col-lg-4">
                           <label> Manufacturer</label>
                           <input type="text" class="form-control" value="{{ $invoices_data->manufacturer->name }}">
@@ -70,7 +70,7 @@
                          <tr>
                            <th>Medicine Name</th>
                            <th>Category</th>
-                           <th>Expire Date</th>
+
                            <th>Box/Carton Type</th>
                            <th>Quantity</th>
                            <th>Total Quantity</th>
@@ -91,9 +91,7 @@
                           <input type="text" class="form-control" id="category_id" value="{{ $show->category->name }}">
                           <input type="hidden" class="form-control" name="category_id[]" id="category_id" value="{{ $show->category_id }}">
                        </td>
-                        <td class="col-lg-1">
-                         <input type="date" class="form-control" name="expire_date[]" style="width:100%;" value="{{ $show->expire_date }}">
-                       </td>
+
                         <td class="col-lg-2">
                           <select name="type_id[]" class="form-control select2 box_quantity">
                             @foreach($type as $types_data)
@@ -118,42 +116,42 @@
                         <td style="display: none;">
                          <input type="text" class="form-control type_quantity">
                        </td>
-                        
+
                         <td class="col-lg-1">
                          <a class="btn btn-xs btn-danger" id="remove" style="background: red;">
                            <i class="fa fa-minus"></i>
                          </a>
-                        
+
                        </td>
                      </tr>
                      @endforeach
-                   
+
                    </tbody>
 
 
 
                         <tfoot>
                           <tr>
-                            <td colspan="6"></td>
+                            <td colspan="5"></td>
                             <td>Sub Total:</td>
                             <td>
                               <input type="text" name="subtotal" class="form-control subtotal" value="{{ $invoices_data->subtotal }}" readonly>
                             </td>
                             <td>
-                              <!-- <a class="btn btn-xs btn-danger" id="add_row">
+                              <a class="btn btn-xs btn-danger" id="add_row">
                                   <i class="fa fa-plus"></i>
-                              </a> -->
+                              </a>
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6"></td>
+                            <td colspan="5"></td>
                             <td>Paid Amount:</td>
                             <td>
                               <input type="text" name="paid_amount" class="form-control paid_amount" value="{{ $invoices_data->paid_amount }}">
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6"></td>
+                            <td colspan="5"></td>
                             <td>Due Amount:</td>
                             <td>
                               <input type="text" name="due_amount" class="form-control due_amount" value="{{ $invoices_data->due_amount }}" readonly>
@@ -169,7 +167,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Update</button>
+                  <button type="submit" class="btn btn-success btn-center">Update</button>
                 </div>
               </form>
             </div>
@@ -179,6 +177,97 @@
        </div>
     </div>
 </div>
-
-
 @endsection
+@push('scripts')
+    <script>
+        $('#add_row').on('click',function(){
+            AddRowfunction();
+        });
+
+        function AddRowfunction(){
+            var tr = '<tr>'+
+                '<td class="col-lg-2"><select class="form-control select2" id="medicine_name" name="medicine_name[]" style="width: 100%;" id="medicine_name"><option selected="selected">Select here</option>@foreach( $medicine as $show)<option value="{{ $show->medicine_name }}">{{ $show->medicine_name }}</option>@endforeach</select></td>'+
+
+                '<td class="col-lg-2"><select class="form-control select2" id="category_id" name="category_id[]" style="width: 100%;"><option selected="selected">Select here</option>@foreach( $category as $show)<option value="{{ $show->id }}">{{ $show->name }}</option>@endforeach</select></td>'+
+
+                ' <td class="col-lg-2"><select class="form-control select2 box_quantity" name="type_id[]" style="width: 100%;"><option selected="selected">Select here</option>@foreach( $type as $show)<option value="{{ $show->id }}">{{ $show->box_carton }} ({{ $show->quantity }})</option>@endforeach</select></td>'+
+
+                ' <td class="col-lg-1"><input type="text" class="form-control quantity" name="quantity[]" placeholder="0"></td>'+
+
+                '<td class="col-lg-1"><input type="text" class="form-control total_quantity" name="total_quantity[]" placeholder="0"></td>'+
+
+                '<td class="col-lg-1"><input type="text" class="form-control purchase_price" name="total_purchase_price[]" placeholder="0.00" style="width:80px;"></td>'+
+
+                '<td class="col-lg-1"><input type="text" class="form-control total_price" name="total_price[]" placeholder="0.00" style="width:80px;"></td>'+
+
+                '<td class="col-lg-2" style="display:none;"><input type="text" class="form-control type_quantity" ></td>'+
+
+                '<td> <a class="btn btn-xs btn-danger" id="remove" style="background: red;"><i class="fa fa-minus"></i></a></td>'
+
+            '</tr>';
+            $('tbody').append(tr);
+            $('.select2').select2();
+        }
+        //subtotal price
+        function SubtotalAmount(){
+            var sum =0;
+            $('.total_price').each(function(){
+                var value = $(this).val();
+                if(!isNaN(value) && value.length !=0 ){
+                    sum= sum+parseFloat(value);
+                }
+            });
+            $('.subtotal').val(sum);
+
+        }
+        $(document).on('click','#remove',function(){
+            var last = $('tbody tr').length;
+            if(last==1){
+                alert('Field no deleted!');
+            }else{
+                $(this).closest('tr').remove();
+            }
+            SubtotalAmount();
+        });
+
+        $(function(){
+            $(document).on('change','.box_quantity',function(){
+                var type_id = $(this).val();
+                $.ajax({
+                    url:"{{ route('get_quantity') }}",
+                    type: "GET",
+                    data:{ type_id:type_id},
+                    success:function(data){
+                        $(".type_quantity").val(data);
+                    }
+                });
+            });
+
+            //total quantity
+            $(document).on('change keyup', '.box_quantity,.quantity',function(){
+                var BoxQuantity =  $(this).closest('tr').find('input.type_quantity').val();
+                var Quantity =  $(this).closest('tr').find('input.quantity').val();
+                var TotalQuantity = BoxQuantity*Quantity;
+                $(this).closest('tr').find('input.total_quantity').val(TotalQuantity);
+
+            });
+
+            //total price
+            $(document).on('keyup', '.purchase_price',function(){
+                var PurchasePrice =  $(this).closest('tr').find('input.purchase_price').val();
+                $(this).closest('tr').find('input.total_price').val(PurchasePrice);
+                SubtotalAmount();
+            });
+
+
+
+            //due amount
+            $(document).on('keyup', '.paid_amount',function(){
+                var SubTotal =  $('.subtotal').val();
+                var PaidAmount =  $(this).closest('tr').find('input.paid_amount').val();
+                var DueAmount = SubTotal-PaidAmount;
+                $('.due_amount').val(DueAmount);
+            });
+        });
+    </script>
+@endpush

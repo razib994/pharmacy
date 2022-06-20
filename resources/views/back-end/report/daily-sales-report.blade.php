@@ -46,13 +46,14 @@ Daily Sales
 				    	</tr>
 				    	  <?php
 				    		  $sum =$sum +$a;
+                              $today = \Carbon\Carbon::now()->toDateString();
 				    		?>
 				    	@endforeach
 				    </tbody>
 				    <tfoot>
 				    	 <tr>
-                            <td colspan="2"></td>
-                            <td>Total:  {{ (\App\Models\CreditCustomer::whereDate('sale_date', \Carbon\Carbon::today())->sum("paid_amount") + \App\Models\CreditPaymentHistory::whereDate('payment_date', \Carbon\Carbon::today())->sum("todays_payment")) - \App\Models\SalesReturn::whereDate('return_date', \Carbon\Carbon::today())->sum("total_amount") }}</td>
+                            <td colspan="2"> </td>
+                            <td> Total:   {{ (\App\Models\CreditCustomer::where('sale_date', $today)->sum("paid_amount") + \App\Models\CreditPaymentHistory::where('payment_date', $today)->sum("todays_payment")) - \App\Models\SalesReturn::where('return_date', $today)->sum("total_amount") }}</td>
                           </tr>
 				    </tfoot>
 			    </table>

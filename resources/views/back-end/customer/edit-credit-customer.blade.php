@@ -33,9 +33,9 @@
                        <div class="form-group col-lg-2">
                             <label>Invoice No</label>
                             <input type="text" name="invoice_no" class="form-control" value="{{ $info->invoice_no }}" readonly="">
-                             
+
                         </div>
-                      
+
                        <div class="form-group col-lg-3">
                           <label> Customer</label>
                           <input type="text" class="form-control" value="{{ $info->customer->name }}" readonly="">
@@ -69,7 +69,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Update</button>
+                  <button type="submit" class="btn btn-success btn-center">Update</button>
                 </div>
               </form>
             </div>

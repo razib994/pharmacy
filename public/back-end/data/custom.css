@@ -2,7 +2,7 @@ a.excel_btn{
     width: 120px;
     height: 40px;
     line-height: 40px;
-    background: green;
+    background: #1ac742;
     color: #fff;
     text-align: center;
     font-size: 13px;
@@ -18,6 +18,13 @@ a.excel_btn i{
 a.excel_btn:hover{
     color: #fff;
 }
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #1ac742 !important;
+    border-color: #1ac742 !important;
+}
+
 .print_invoice_area{
     height: 300px;
     background: red;
@@ -35,13 +42,13 @@ a.excel_btn:hover{
 }
 .card table td a {
 	color: white;
-	background: #007BFF;
+	background: #1ac742;
 	padding: 5px 7px;
 	/* border-radius: 5px; */
 	font-size: 12px;
 }
 .card table tr th {
-    background: #007BFF;
+    background: #1ac742;
     color: #fff;
     font-size: 10px;
     text-align: center;
@@ -91,4 +98,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .stock-btn:hover{
     color: #fff;
+}
+.card-primary:not(.card-outline) > .card-header {
+    background-color: #1ac742 !important;
 }

@@ -15,6 +15,7 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-lg-3"></div>
 	    <div class="col-lg-6">
 			<div class="card" style="padding:30px;">
 
@@ -65,7 +66,7 @@
                       <span class="text-danger">{{ $message }}</span>
                      @enderror
                   </div>
-                   
+
                   <div class="form-group">
                     <label>Remarks</label>
                     <input type="text" name="remarks" class="form-control @error('remarks') is-invalid @enderror" placeholder="Remarks" value="{{ old('remarks') }}">
@@ -78,7 +79,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Submit</button>
+                  <button type="submit" class="btn btn-success btn-center">Submit</button>
                 </div>
               </form>
             </div>
@@ -86,6 +87,7 @@
 			</div>
 
 	     </div>
+        <div class="col-lg-3"></div>
     </div>
 </div>
 

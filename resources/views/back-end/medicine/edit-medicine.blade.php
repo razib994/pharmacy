@@ -36,7 +36,7 @@
                 <div class="card-body">
 
                   <div class="row">
-                      
+
                        <div class="form-group col-lg-3">
                             <label>Manufacturer Name</label>
                             <input type="text" class="form-control" value="{{ $info->manufacturer->name }}">
@@ -65,7 +65,7 @@
 
                         <input type="hidden" name="id" value="{{ $info->id }}">
 
-                     
+
 
                   </div>
 
@@ -84,9 +84,9 @@
                        <div class="form-group col-lg-3">
                         <label>Sale Unit Price</label>
                         <input type="text" name="sale_unit_price" class="form-control @error('sale_unit_price') is-invalid @enderror" value="{{ $info->sale_unit_price }}">
-                      </div>    
+                      </div>
 
-                    
+
 
                       <div class="form-group col-lg-3">
                         <label>Select Status</label><br/>
@@ -105,10 +105,10 @@
 
 
                 </div>
-               
+
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Update</button>
+                  <button type="submit" class="btn btn-success btn-center">Update</button>
                 </div>
               </form>
             </div>

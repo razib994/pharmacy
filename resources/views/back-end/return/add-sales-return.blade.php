@@ -16,6 +16,15 @@
 <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
+          @if ($errors->any())
+              <div class="alert alert-danger">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+          @endif
       <div class="card" style="padding:30px;">
 
              @if(Session::has('message'))
@@ -40,7 +49,7 @@
                             <label>Return Date</label>
                             <input type="date" name="return_date" class="form-control" id="single1" readonly>
                         </div>
-                       
+
                   </div>
 
                   <div class="row">
@@ -61,7 +70,7 @@
 
                        <td class="col-lg-3">
                          <select class="form-control select2" id="medicine_name" name="medicine_name[]" style="width: 100%;" id="medicine_name">
-                              <option selected="selected">Select here</option>
+                              <option selected="selected" value="">Select here</option>
                               @foreach( $medicine as $show)
                               <option value="{{ $show->medicine_name }}">{{ $show->medicine_name }}</option>
                               @endforeach
@@ -71,7 +80,7 @@
 
                         <td class="col-lg-3">
                          <select class="form-control select2" id="category_id" name="category_id[]" id="category_id" style="width:100%;">
-                              <option selected="selected">Select here</option>
+                              <option selected="selected" value="">Select here</option>
                               @foreach( $category as $show)
                               <option value="{{ $show->id }}">{{ $show->name }}</option>
                               @endforeach
@@ -85,7 +94,7 @@
                         <td class="col-lg-1">
                          <input type="text" class="form-control quantity" name="quantity[]" placeholder="0">
                        </td>
-                       
+
                         <td class="col-lg-2">
                          <input type="text" class="form-control total_amount" name="total_amount[]" placeholder="0">
                        </td>
@@ -94,10 +103,10 @@
                          <a class="btn btn-xs btn-danger" id="remove_purchase_return" style="background: red;">
                            <i class="fa fa-minus"></i>
                          </a>
-                        
+
                        </td>
                      </tr>
-                   
+
                    </tbody>
 
                    <tfoot>
@@ -122,7 +131,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Submit</button>
+                  <button type="submit" class="btn btn-success btn-center">Submit</button>
                 </div>
               </form>
             </div>
@@ -145,7 +154,7 @@
    });
 
    function AddSalesReturnRowfunction(){
- 
+
     var tr = '<tr>'+
 
              '<td class="col-lg-2"><select class="form-control select2" id="medicine_name" name="medicine_name[]" style="width: 100%;" id="medicine_name"><option selected="selected">Select here</option>@foreach( $medicine as $show)<option value="{{ $show->medicine_name }}">{{ $show->medicine_name }}</option>@endforeach</select></td>'+
@@ -165,20 +174,21 @@
             $('.select2').select2();
     }
 
-    $(document).on('click','#remove_sales_return',function(){
-      var last = $('tbody tr').length;
-        if(last==1){
-          alert('Field no deleted!');
-        }else{
-           $(this).closest('tr').remove();
-        }
-      
-  });
+
 
 
 
 
 $(function(){
+    $(document).on('click','#remove_sales_return',function(){
+        var last = $('tbody tr').length;
+        if(last==1){
+            alert('Field no deleted!');
+        }else{
+            $(this).closest('tr').remove();
+        }
+        SalesReturnSubtotalAmount();
+    });
 
  //total price
      $(document).on('keyup', '.quantity',function(){
@@ -190,7 +200,7 @@ $(function(){
     });
 
 
-     
+
   //subtotal price
      function SalesReturnSubtotalAmount(){
       var sum =0;

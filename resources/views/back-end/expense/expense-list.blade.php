@@ -49,7 +49,7 @@
 				    		<td>
 
 				            	<a href="{{ route('edit_expense',['id'=>$show->id]) }}" title="update">
-				            		<i class="fa fa-pen"></i>
+				            		<i class="fa fa-edit"></i>
 				            	</a>
 
 				            	<a href="{{ route('expense_delete',['id'=>$show->id]) }}" onclick="return confirm('Are you sure?')" title="delete" class="bg-danger">

@@ -16,6 +16,15 @@
 <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
+          @if ($errors->any())
+              <div class="alert alert-danger">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+          @endif
       <div class="card" style="padding:30px;">
 
              @if(Session::has('message'))
@@ -53,7 +62,7 @@
 
                        <td class="col-lg-2">
                          <select class="form-control select2" id="medicine_name" name="medicine_name[]" style="width: 100%;" id="medicine_name">
-                              <option selected="selected">Select here</option>
+                              <option selected="selected" value="">Select here</option>
                               @foreach( $medicine as $show)
                               <option value="{{ $show->medicine_name }}">{{ $show->medicine_name }}</option>
                               @endforeach
@@ -63,7 +72,7 @@
 
                         <td class="col-lg-2">
                          <select class="form-control select2" id="category_id" name="category_id[]" id="category_id" style="width:100%;">
-                              <option selected="selected">Select here</option>
+                              <option selected="selected" value="">Select here</option>
                               @foreach( $category as $show)
                               <option value="{{ $show->id }}">{{ $show->name }}</option>
                               @endforeach
@@ -118,7 +127,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-center">Submit</button>
+                  <button type="submit" class="btn btn-success btn-center">Submit</button>
                 </div>
               </form>
             </div>
@@ -163,17 +172,20 @@
             $('.select2').select2();
     }
 
+      $(function(){
     $(document).on('click','#remove_purchase_return',function(){
+
       var last = $('tbody tr').length;
         if(last==1){
           alert('Field no deleted!');
         }else{
            $(this).closest('tr').remove();
         }
+        PurchaseReturnSubtotalAmount();
 
   });
 
-
+      });
 
 
 $(function(){
@@ -189,23 +201,19 @@ $(function(){
 
 
 
-
-  //subtotal price
-     function PurchaseReturnSubtotalAmount(){
-      var sum =0;
-      $('.total_amount').each(function(){
-          var value = $(this).val();
-          if(!isNaN(value) && value.length !=0 ){
-            sum= sum+parseFloat(value);
-          }
-      });
-      $('.subtotal').val(sum);
-
-     }
-
-
 });
+      //subtotal price
+      function PurchaseReturnSubtotalAmount(){
+          var sum =0;
+          $('.total_amount').each(function(){
+              var value = $(this).val();
+              if(!isNaN(value) && value.length !=0 ){
+                  sum= sum+parseFloat(value);
+              }
+          });
+          $('.subtotal').val(sum);
 
+      }
   </script>
 
 

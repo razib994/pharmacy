@@ -31,6 +31,7 @@ use App\Exports\YealySalesExport;
 use App\Exports\YealySalesRevenueExport;
 use App\Http\Controllers\Controller;
 use App\Models\Manufacturer;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Medicine;
@@ -67,10 +68,8 @@ class PosController extends Controller
     	return view('back-end.pos.add-pos',$data);
     }
 
-
     public function store(Request $request){
-
-        $request->validate([
+        $validated = $request->validate([
             'customer_id' => 'required',
         ]);
 
@@ -161,7 +160,11 @@ class PosController extends Controller
 
     public function edit($invoice_no){
       $data['pos_invoices'] = PosInvoice::where('invoice_no',$invoice_no)->get();
+      $data['pos_invoices_count'] = PosInvoice::where('invoice_no',$invoice_no)->count();
       $data['sale_invoices'] = SaleInvoice::where('invoice_no',$invoice_no)->first();
+        $data['medicine'] = Medicine::all();
+        $data['category'] = Category::all();
+        $data['type'] = Type::all();
       return view('back-end.pos.edit-pos',$data);
     }
 
@@ -170,10 +173,9 @@ class PosController extends Controller
       PosInvoice::where('invoice_no',$request->invoice_no)->delete();
       SaleInvoice::where('invoice_no',$request->invoice_no)->delete();
       SaleRevenue::where('invoice_no',$request->invoice_no)->delete();
-
+      CreditCustomer::where('invoice_no',$request->invoice_no)->delete();
 
       foreach($request['medicine_name'] as $key=>$value){
-
             $a = PosInvoice::create(
                 [
                   "invoice_no"=>$request->invoice_no,
@@ -194,7 +196,6 @@ class PosController extends Controller
                 ]
             );
 
-
              $b = SaleRevenue::create(
                 [
                   "invoice_no"=>$request->invoice_no,
@@ -204,7 +205,6 @@ class PosController extends Controller
                   "discount"=>0,
                 ]
             );
-
              }
         $sale_invoice = new SaleInvoice();
         $sale_invoice->invoice_no = $request->invoice_no;
@@ -217,9 +217,15 @@ class PosController extends Controller
         $sale_invoice->due_amount = $request->due_amount;
         $sale_invoice->save();
 
+        $credit_customer = new CreditCustomer();
+        $credit_customer->invoice_no = $request->invoice_no;
+        $credit_customer->customer_id = $request->customer_id;
+        $credit_customer->total_amount = $request->total_amount;
+        $credit_customer->paid_amount = $request->paid_amount;
+        $credit_customer->due_amount = $request->due_amount;
+        $credit_customer->sale_date = $request->sale_date;
+        $credit_customer->save();
          return redirect('pos/list');
-
-
     }
 
     public function get_sale_unit_price(Request $request){

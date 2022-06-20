@@ -16,10 +16,8 @@ class ProfitLossPreviousExport implements FromCollection, WithHeadings, ShouldAu
     public function headings(): array
     {
         return [
-            'invoice_no',
-            'Customer Name',
-            'Sale Date',
-            'Total Amount',
+            'Year Name',
+            'Amount'
         ];
     }
 
