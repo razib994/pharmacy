@@ -75,32 +75,38 @@ class PosController extends Controller
 
        $count_medicine = count($request->medicine_name);
         for($i=0; $i<$count_medicine; $i++){
-        $pos_invoice = new PosInvoice();
-        $pos_invoice->invoice_no = $request->invoice_no;
-        $pos_invoice->customer_id = $request->customer_id;
-        $pos_invoice->sale_date = $request->sale_date;
-        $pos_invoice->medicine_name = $request->medicine_name[$i];
-        $pos_invoice->category_id = $request->category_id[$i];
-        $pos_invoice->quantity = $request->quantity[$i];
-        $pos_invoice->purchase_unit_price = $request->purchase_unit_price[$i];
-        $pos_invoice->sale_unit_price = $request->sale_unit_price[$i];
-        $pos_invoice->total_price = $request->total_price[$i];
-        $pos_invoice->subtotal = $request->subtotal;
-        $pos_invoice->discount = $request->discount;
-        $pos_invoice->total_amount = $request->total_amount;
-        $pos_invoice->paid_amount = $request->paid_amount;
-        $pos_invoice->due_amount = $request->due_amount;
-        $pos_invoice->save();
+          if(array($request->available_stock) > array($request->quantity)) {
+              
+              $pos_invoice = new PosInvoice();
+              $pos_invoice->invoice_no = $request->invoice_no;
+              $pos_invoice->customer_id = $request->customer_id;
+              $pos_invoice->sale_date = $request->sale_date;
+              $pos_invoice->medicine_name = $request->medicine_name[$i];
+              $pos_invoice->category_id = $request->category_id[$i];
+              $pos_invoice->quantity = $request->quantity[$i];
+              $pos_invoice->purchase_unit_price = $request->purchase_unit_price[$i];
+              $pos_invoice->sale_unit_price = $request->sale_unit_price[$i];
+              $pos_invoice->total_price = $request->total_price[$i];
+              $pos_invoice->subtotal = $request->subtotal;
+              $pos_invoice->discount = $request->discount;
+              $pos_invoice->total_amount = $request->total_amount;
+              $pos_invoice->paid_amount = $request->paid_amount;
+              $pos_invoice->due_amount = $request->due_amount;
+              $pos_invoice->save();
 
 
+              $revenue = new SaleRevenue();
+              $revenue->invoice_no = $request->invoice_no;
+              $revenue->sale_date = $request->sale_date;
+              $revenue->total_purchase_price = $request->total_purchase_price[$i];
+              $revenue->total_sale_price = $request->total_sale_price[$i];
+              $revenue->discount = $request->discount;
+              $revenue->save();
+          } else {
 
-        $revenue = new SaleRevenue();
-        $revenue->invoice_no = $request->invoice_no;
-        $revenue->sale_date = $request->sale_date;
-        $revenue->total_purchase_price = $request->total_purchase_price[$i];
-        $revenue->total_sale_price = $request->total_sale_price[$i];
-        $revenue->discount = $request->discount;
-        $revenue->save();
+              return redirect()->back();
+          }
+
 
         }
 

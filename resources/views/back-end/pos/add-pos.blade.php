@@ -111,7 +111,7 @@
                        </td>
 
                         <td class="col-lg-1">
-                         <input type="text" class="form-control available_stock" value="" readonly="">
+                         <input type="text" class="form-control available_stock" name="available_stock[]" value="" readonly="">
                        </td>
 
                         <td class="col-lg-1">
@@ -172,7 +172,7 @@
                             <td colspan="5"></td>
                             <td>Total Amount:</td>
                             <td>
-                              <input type="text" name="total_amount" class="form-control total_amount" value="0.00">
+                              <input type="text" name="total_amount" class="form-control total_amount" value="0.00" readonly>
                             </td>
                           </tr>
 

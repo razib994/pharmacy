@@ -138,7 +138,7 @@
                             <td colspan="5"></td>
                             <td>Sub Total:</td>
                             <td>
-                              <input type="text" name="subtotal" class="form-control subtotal" value="{{ $sale_invoices->subtotal }}">
+                              <input type="text" name="subtotal" class="form-control subtotal" value="{{ $sale_invoices->subtotal }}" readonly>
                             </td>
                             <td>
                               <a class="btn btn-xs btn-danger" id="add_row_pos">
@@ -159,7 +159,7 @@
                             <td colspan="5"></td>
                             <td>Total Amount:</td>
                             <td>
-                              <input type="text" name="total_amount" class="form-control total_amount" value="{{ $sale_invoices->total_amount }}">
+                              <input type="text" name="total_amount" class="form-control total_amount" value="{{ $sale_invoices->total_amount }}" readonly  >
                             </td>
                           </tr>
 
