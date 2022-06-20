@@ -5,7 +5,7 @@
 @endsection
 
 @section('content-title')
-   <h1 class="text-uppercase text-white"> <strong> Dashboard </strong> </h1>
+   <h1 class="text-uppercase"> <strong> Dashboard </strong> </h1>
 @endsection
 
 

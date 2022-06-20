@@ -76,7 +76,6 @@ class PosController extends Controller
        $count_medicine = count($request->medicine_name);
         for($i=0; $i<$count_medicine; $i++){
           if(array($request->available_stock) > array($request->quantity)) {
-              
               $pos_invoice = new PosInvoice();
               $pos_invoice->invoice_no = $request->invoice_no;
               $pos_invoice->customer_id = $request->customer_id;
@@ -94,7 +93,6 @@ class PosController extends Controller
               $pos_invoice->due_amount = $request->due_amount;
               $pos_invoice->save();
 
-
               $revenue = new SaleRevenue();
               $revenue->invoice_no = $request->invoice_no;
               $revenue->sale_date = $request->sale_date;
@@ -103,13 +101,9 @@ class PosController extends Controller
               $revenue->discount = $request->discount;
               $revenue->save();
           } else {
-
               return redirect()->back();
           }
-
-
         }
-
 
       $sale_invoice = new SaleInvoice();
       $sale_invoice->invoice_no = $request->invoice_no;
@@ -122,8 +116,6 @@ class PosController extends Controller
       $sale_invoice->due_amount = $request->due_amount;
       $sale_invoice->save();
 
-
-
       $credit_customer = new CreditCustomer();
       $credit_customer->invoice_no = $request->invoice_no;
       $credit_customer->customer_id = $request->customer_id;
@@ -132,8 +124,6 @@ class PosController extends Controller
       $credit_customer->due_amount = $request->due_amount;
       $credit_customer->sale_date = $request->sale_date;
       $credit_customer->save();
-
-
 
       return redirect('pos/list');
 
