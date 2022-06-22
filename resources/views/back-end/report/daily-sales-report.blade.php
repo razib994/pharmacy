@@ -46,7 +46,7 @@ Daily Sales
 				    	</tr>
 				    	  <?php
 				    		  $sum =$sum +$a;
-                              $today = \Carbon\Carbon::now()->toDateString();
+                              $today = date('Y-m-d');
 				    		?>
 				    	@endforeach
 				    </tbody>

@@ -38,7 +38,9 @@ class StockController extends Controller
        $data['revenues'] = SaleRevenue::select('invoice_no','sale_date')
                        ->selectRaw('sum(total_purchase_price) as sum1, sum(total_sale_price) as sum2')
                        ->groupBy('invoice_no','sale_date')
+                        ->whereDay('sale_date',date('d'))
                        ->get();
+
        return view('back-end.report.revenue',$data);
     }
 

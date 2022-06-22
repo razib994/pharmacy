@@ -15,7 +15,7 @@ class YealySalesRevenueExport implements FromCollection, WithHeadings, ShouldAut
     public function headings(): array
     {
         return [
-            'invoice_no',
+            'Invoice No',
             'Sales Revenue',
             'Sale Date'
         ];

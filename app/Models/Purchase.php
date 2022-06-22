@@ -45,17 +45,20 @@ class Purchase extends Model
     //     return $this->hasMany(Invoice::class);
     // }
     public static function getPurchesData() {
-        $records = DB::table('purchases')
-            ->join('manufacturers','manufacturers.id','=','purchases.manufacturer_id')
-           ->join('categories','categories.id','=','purchases.category_id')
-            ->select('invoice_no',
-            'manufacturers.name',
-            'medicine_name',
-            'category_id',
-            'purchase_date',
-            'total_quantity',
-            'total_price')->get()->toArray();
-        return $records;
+        $records = Purchase::with('manufacturer','category')->get();
+        $mappedcollection = $records->map(function($record, $key) {
+            return [
+                'invoice_no' => $record->invoice_no,
+                'manufacturers_name' => $record->manufacturer->name,
+                'medicine_name' => $record->medicine_name,
+                'category_id' => $record->category->name,
+                'purchase_date' => $record->purchase_date,
+                'total_quantity' => $record->total_quantity,
+                'total_price' => $record->total_price,
+            ];
+        });
+        return $mappedcollection;
+
     }
 
 }

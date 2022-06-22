@@ -254,8 +254,10 @@ class PosController extends Controller
 
        $sale = DB::table('pos_invoices')
                    ->where('category_id','=',$category_id)
-
+                    ->where('medicine_name','=',$medicine_name)
                    ->sum('quantity');
+
+
 
         $available = $stocks-$sale;
         return response()->json(['available'=>$available]);

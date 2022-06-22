@@ -10,7 +10,7 @@ use App\Http\Controllers;
 
 /*backend page setup*/
 Route::get('/chunnu',[
-    "uses" =>"App\Http\Controllers\Backend\BackendController@login",
+    "uses" =>"Backend\BackendController@login",
     "as" =>"login"
 ]);
 Route::group(['middleware'=>'auth'],function(){
@@ -20,7 +20,7 @@ Route::group(['middleware'=>'auth'],function(){
 
 });
 Route::get('/testing',[
-    "uses" =>"App\Http\Controllers\Backend\BackendController@testing",
+    "uses" =>"Backend\BackendController@testing",
     "as" =>"testing"
 ]);
 
@@ -31,30 +31,30 @@ Route::get('/testing',[
 // ]);
 // User Route
 Route::get('/all/user',[
-    "uses" =>"App\Http\Controllers\Backend\UserRoleController@index",
+    "uses" =>"Backend\UserRoleController@index",
     "as" =>"all_user"
 ]);
 
 Route::get('user/add',[
-    "uses" =>"App\Http\Controllers\Backend\UserRoleController@create",
+    "uses" =>"Backend\UserRoleController@create",
     "as" =>"user_add"
 ]);
 
 Route::post('user/store',[
-    "uses" =>"App\Http\Controllers\Backend\UserRoleController@store",
+    "uses" =>"Backend\UserRoleController@store",
     "as" =>"user_store"
 ]);
 
 Route::get('user/delete/{id}',[
-    "uses" =>"App\Http\Controllers\Backend\UserRoleController@delete",
+    "uses" =>"Backend\UserRoleController@delete",
     "as" =>"delete_user"
 ]);
 Route::get('user/edit/{id}',[
-    "uses" =>"App\Http\Controllers\Backend\UserRoleController@edit",
+    "uses" =>"Backend\UserRoleController@edit",
     "as" =>"edit_user"
 ]);
 Route::post('user/update',[
-    "uses" =>"App\Http\Controllers\Backend\UserRoleController@update",
+    "uses" =>"Backend\UserRoleController@update",
     "as" =>"update_user"
 ]);
 
@@ -66,52 +66,52 @@ Route::post('user/update',[
 
 
 Route::get('/all/stock',[
-  "uses" =>"App\Http\Controllers\Backend\StockController@index",
+  "uses" =>"Backend\StockController@index",
   "as" =>"all_stock"
 ]);
 
 Route::get('/all/revenue',[
-  "uses" =>"App\Http\Controllers\Backend\StockController@revenue_list",
+  "uses" =>"Backend\StockController@revenue_list",
   "as" =>"revenue_list"
 ]);
 Route::get('/all/monthly/revenue',[
-  "uses" =>"App\Http\Controllers\Backend\StockController@monthly_sales_revenue",
+  "uses" =>"Backend\StockController@monthly_sales_revenue",
   "as" =>"monthly_sales_revenue"
 ]);
 Route::get('/all/yearly/revenue',[
-  "uses" =>"App\Http\Controllers\Backend\StockController@yearly_sales_revenue",
+  "uses" =>"Backend\StockController@yearly_sales_revenue",
   "as" =>"yearly_sales_revenue"
 ]);
 Route::get('/previous/year/sales/revenue',[
-  "uses" =>"App\Http\Controllers\Backend\StockController@previous_year_sales_revenue",
+  "uses" =>"Backend\StockController@previous_year_sales_revenue",
   "as" =>"previous_year_sales_revenue"
 ]);
 Route::get('/daily/sales',[
-  "uses" =>"App\Http\Controllers\Backend\StockController@daily_sales",
+  "uses" =>"Backend\StockController@daily_sales",
   "as" =>"daily_sales"
 ]);
 Route::get('/monthly/sales',[
-  "uses" =>"App\Http\Controllers\Backend\StockController@monthly_sales",
+  "uses" =>"Backend\StockController@monthly_sales",
   "as" =>"monthly_sales"
 ]);
 Route::get('/yearly/sales',[
-  "uses" =>"App\Http\Controllers\Backend\StockController@yearly_sales",
+  "uses" =>"Backend\StockController@yearly_sales",
   "as" =>"yearly_sales"
 ]);
 Route::get('/previous/year/sales',[
-  "uses" =>"App\Http\Controllers\Backend\StockController@previous_year_sales",
+  "uses" =>"Backend\StockController@previous_year_sales",
   "as" =>"previous_year_sales"
 ]);
 Route::get('/monthly/profit/loss',[
-  "uses" =>"App\Http\Controllers\Backend\StockController@monthly_profit_loss",
+  "uses" =>"Backend\StockController@monthly_profit_loss",
   "as" =>"monthly_profit_loss"
 ]);
 Route::get('/yearly/profit/loss',[
-  "uses" =>"App\Http\Controllers\Backend\StockController@yearly_profit_loss",
+  "uses" =>"Backend\StockController@yearly_profit_loss",
   "as" =>"yearly_profit_loss"
 ]);
 Route::get('/previous/year/profit/loss',[
-  "uses" =>"App\Http\Controllers\Backend\StockController@previous_year_profit_loss",
+  "uses" =>"Backend\StockController@previous_year_profit_loss",
   "as" =>"previous_year_profit_loss"
 ]);
 
@@ -119,7 +119,7 @@ Route::get('/previous/year/profit/loss',[
 
 
 //customer info
-Route::group(['prefix'=>'customer','namespace'=>'App\Http\Controllers\BackEnd'],function(){
+Route::group(['prefix'=>'customer','namespace'=>'BackEnd'],function(){
 
    Route::get('/list',[
 	"uses" =>"CustomerController@index",
@@ -182,7 +182,7 @@ Route::group(['prefix'=>'customer','namespace'=>'App\Http\Controllers\BackEnd'],
 
 
 //manufacturer info
-Route::group(['prefix'=>'manufacturer','namespace'=>'App\Http\Controllers\BackEnd'],function(){
+Route::group(['prefix'=>'manufacturer','namespace'=>'BackEnd'],function(){
 
    Route::get('/list',[
 	"uses" =>"ManufacturerController@index",
@@ -241,7 +241,7 @@ Route::group(['prefix'=>'manufacturer','namespace'=>'App\Http\Controllers\BackEn
 
 
 //category info
-Route::group(['prefix'=>'category','namespace'=>'App\Http\Controllers\BackEnd'],function(){
+Route::group(['prefix'=>'category','namespace'=>'BackEnd'],function(){
 
    Route::get('/list',[
 	"uses" =>"CategoryController@index",
@@ -277,7 +277,7 @@ Route::group(['prefix'=>'category','namespace'=>'App\Http\Controllers\BackEnd'],
 });
 
 //unit info
-Route::group(['prefix'=>'unit','namespace'=>'App\Http\Controllers\BackEnd'],function(){
+Route::group(['prefix'=>'unit','namespace'=>'BackEnd'],function(){
 
    Route::get('/list',[
 	"uses" =>"UnitController@index",
@@ -314,7 +314,7 @@ Route::group(['prefix'=>'unit','namespace'=>'App\Http\Controllers\BackEnd'],func
 
 
 //type info
-Route::group(['prefix'=>'type','namespace'=>'App\Http\Controllers\BackEnd'],function(){
+Route::group(['prefix'=>'type','namespace'=>'BackEnd'],function(){
 
    Route::get('/list',[
   "uses" =>"TypeController@index",
@@ -352,7 +352,7 @@ Route::group(['prefix'=>'type','namespace'=>'App\Http\Controllers\BackEnd'],func
 
 
 //medicine info
-Route::group(['prefix'=>'medicine','namespace'=>'App\Http\Controllers\BackEnd'],function(){
+Route::group(['prefix'=>'medicine','namespace'=>'BackEnd'],function(){
 
    Route::get('/list',[
   "uses" =>"MedicineController@index",
@@ -389,7 +389,7 @@ Route::group(['prefix'=>'medicine','namespace'=>'App\Http\Controllers\BackEnd'],
 
 
 //purchase info
-Route::group(['prefix'=>'purchase','namespace'=>'App\Http\Controllers\BackEnd'],function(){
+Route::group(['prefix'=>'purchase','namespace'=>'BackEnd'],function(){
 
    Route::get('/invoice/list',[
       "uses" =>"PurchaseController@index",
@@ -449,7 +449,7 @@ Route::group(['prefix'=>'purchase','namespace'=>'App\Http\Controllers\BackEnd'],
 });
 
 //pos info
-Route::group(['prefix'=>'pos','namespace'=>'App\Http\Controllers\BackEnd'],function(){
+Route::group(['prefix'=>'pos','namespace'=>'BackEnd'],function(){
 
    Route::get('/list',[
       "uses" =>"PosController@index",
@@ -921,7 +921,7 @@ Route::get('/avaiable/quantity30',[
 
 
 //pos info
-Route::group(['prefix'=>'expense','namespace'=>'App\Http\Controllers\BackEnd'],function(){
+Route::group(['prefix'=>'expense','namespace'=>'BackEnd'],function(){
 
    Route::get('/all',[
       "uses" =>"ExpenseController@index",
@@ -975,16 +975,16 @@ Route::group(['prefix'=>'expense','namespace'=>'App\Http\Controllers\BackEnd'],f
 });
 
 Route::get('/sales/return/delete/{id}',[
-    "uses" =>"App\Http\Controllers\BackEnd\ReturnController@salesreutrndelete",
+    "uses" =>"BackEnd\ReturnController@salesreutrndelete",
     "as" =>"sales_reutrn_delete"
 ]);
 
 Route::get('/purchase/return/delete/{id}',[
-    "uses" =>"App\Http\Controllers\BackEnd\ReturnController@purchesReturndelete",
+    "uses" =>"BackEnd\ReturnController@purchesReturndelete",
     "as" =>"purchase_reutrn_delete"
 ]);
 // return working
-Route::group(['prefix'=>'return','namespace'=>'App\Http\Controllers\BackEnd'],function(){
+Route::group(['prefix'=>'return','namespace'=>'BackEnd'],function(){
 
    Route::get('/purchase/list',[
       "uses" =>"ReturnController@purchase_return_list",
@@ -1026,7 +1026,7 @@ Route::group(['prefix'=>'return','namespace'=>'App\Http\Controllers\BackEnd'],fu
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/user', 'App\Http\Controllers\BackEnd\UserRoleController@export');
+Route::get('/user', 'BackEnd\UserRoleController@export');
 
 Route::get('users/export/', [Controllers\BackEnd\StockController::class, 'export']);
 Route::get('saleReturnExport', [Controllers\BackEnd\ReturnController::class, 'saleReturnExport']);

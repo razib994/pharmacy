@@ -7,10 +7,7 @@
 @section('content-title')
    <h1 class="text-uppercase"> <strong> Dashboard </strong> </h1>
 @endsection
-
-
 @section('content')
-
    <!-- Main content -->
     <section class="content" >
       <div class="container-fluid">

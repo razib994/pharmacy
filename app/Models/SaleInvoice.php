@@ -24,19 +24,19 @@ class SaleInvoice extends Model
         return $records;
     }
     public static function getDailySales() {
-        $records = DB::table('sale_invoices')->select('invoice_no','sale_date','total_amount')->whereDay('sale_date',date('d'))->orderBy('id', 'asc')->get()->toArray();
+        $records = DB::table('sale_invoices')->select('invoice_no','sale_date','paid_amount')->whereDay('sale_date',date('d'))->orderBy('id', 'asc')->get()->toArray();
         return $records;
     }
     public static function getMonthlySales() {
-        $records = DB::table('sale_invoices')->select('invoice_no','sale_date','total_amount')->whereMonth('sale_date',date('m'))->orderBy('id', 'asc')->get()->toArray();
+        $records = DB::table('sale_invoices')->select('invoice_no','sale_date','paid_amount')->whereMonth('sale_date',date('m'))->orderBy('id', 'asc')->get()->toArray();
         return $records;
     }
     public static function getYealySales() {
-        $records = DB::table('sale_invoices')->select('invoice_no','sale_date','total_amount')->whereYear('sale_date', '=', Carbon::now()->year)->orderBy('id', 'asc')->get()->toArray();
+        $records = DB::table('sale_invoices')->select('invoice_no','sale_date','paid_amount')->whereYear('sale_date', '=', Carbon::now()->year)->orderBy('id', 'asc')->get()->toArray();
         return $records;
     }
     public static function getPreviousSales() {
-        $records = DB::table('sale_invoices')->select('invoice_no','sale_date','total_amount')->whereYear('sale_date',Carbon::now()->year-1)->orderBy('id', 'asc')->get()->toArray();
+        $records = DB::table('sale_invoices')->select('invoice_no','sale_date','paid_amount')->whereYear('sale_date',Carbon::now()->year-1)->orderBy('id', 'asc')->get()->toArray();
         return $records;
     }
 
